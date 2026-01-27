@@ -1,0 +1,102 @@
+.card {
+  padding: 3rem; /* More breathing room */
+  margin: 2rem 0; /* Push away from nav */
+  position: relative;
+  box-shadow: 0 20px 40px rgba(0,0,0,0.1), 0 0 0 1px rgba(255,255,255,0.8) inset;
+}
+
+.modeSwitch {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 2.5rem;
+  justify-content: center;
+  background: #f8f9fa;
+  padding: 8px;
+  border-radius: 60px;
+  width: fit-content;
+  margin-left: auto;
+  margin-right: auto;
+  flex-wrap: wrap;
+}
+
+.inputArea {
+  min-height: 220px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.divider {
+  border: none;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, #eee, transparent);
+  margin: 2.5rem 0;
+}
+
+.metadataGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem;
+}
+
+/* The Shiny Labels */
+.labelShiny {
+  display: block;
+  margin-bottom: 0.8rem;
+  font-size: 0.9rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  font-weight: 800;
+  
+  /* Gradient Text */
+  background: linear-gradient(45deg, var(--primary), #ff8e8e);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.inputControl {
+  width: 100%;
+  padding: 16px;
+  border: 2px solid #f0f0f0;
+  border-radius: 12px;
+  font-size: 1.1rem;
+  background: #fff;
+  transition: all 0.3s ease;
+  box-sizing: border-box;
+  color: var(--ink);
+}
+
+.inputControl:focus {
+  border-color: var(--secondary);
+  box-shadow: 0 0 0 4px rgba(78, 205, 196, 0.1);
+  outline: none;
+}
+
+.submitBtn {
+  width: 100%;
+  margin-top: 2rem;
+  padding: 18px;
+  font-size: 1.2rem;
+}
+
+@media (max-width: 600px) {
+  .card {
+    padding: 1.5rem; /* Reduce padding to save space */
+    margin: 1rem 0;
+  }
+
+  .metadataGrid {
+    grid-template-columns: 1fr; /* Stack inputs vertically */
+    gap: 1.5rem;
+  }
+  
+  .modeSwitch {
+    width: 100%; /* Full width buttons */
+  }
+  
+  .modeSwitch button {
+    flex: 1; /* Equal width buttons */
+    font-size: 0.9rem;
+  }
+}

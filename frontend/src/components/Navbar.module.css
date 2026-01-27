@@ -1,0 +1,88 @@
+.nav {
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid rgba(0,0,0,0.06);
+  padding: 0.8rem 0; /* Reduced vertical padding slightly for tightness */
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.03);
+}
+
+.navContainer {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center; /* Critical for vertical alignment */
+  flex-wrap: nowrap;   /* Prevents stacking on small screens */
+  width: 100%;
+}
+
+.logo {
+  text-decoration: none;
+  color: var(--ink);
+  display: flex;
+  align-items: center; /* Vertically centers Book Icon with Text */
+  gap: 10px;           /* Space between Book Icon and Text */
+  font-weight: 800;
+  font-size: 1.4rem;
+  letter-spacing: -0.5px;
+  white-space: nowrap; /* Prevents "Magic Storyteller" from breaking lines */
+}
+
+.menu {
+  display: flex;
+  flex-direction: row;
+  align-items: center; /* Vertically centers the Links */
+  gap: 2rem;           /* Space between Create / History / About */
+}
+
+.navLink {
+  display: flex;
+  align-items: center; /* Vertically centers Icon with Link Text */
+  gap: 8px;            /* Space between Icon and Text */
+  text-decoration: none;
+  color: #666;
+  font-weight: 600;
+  font-size: 0.95rem;
+  transition: all 0.2s ease;
+  padding: 8px 12px;
+  border-radius: 8px;
+}
+
+.navLink:hover {
+  background: rgba(0,0,0,0.03);
+  color: var(--primary);
+}
+
+.active {
+  color: var(--primary);
+  background: rgba(255, 107, 107, 0.08); /* Subtle highlight for active tab */
+}
+
+/* Mobile Responsiveness: Keep alignment but scale down if needed */
+@media (max-width: 600px) {
+  .navContainer {
+    flex-direction: column; /* Stack Logo on top of Menu */
+    gap: 1rem;
+  }
+
+  .menu {
+    gap: 0.5rem; /* Tighter spacing */
+    width: 100%;
+    justify-content: space-between; /* Spread links evenly */
+  }
+
+  .navLink {
+    padding: 6px 10px;
+    font-size: 0.85rem;
+    flex-direction: column; /* Stack Icon on top of Text */
+    gap: 4px;
+    flex: 1; /* Make touch targets equal width */
+    justify-content: center;
+  }
+  
+  .logo {
+    font-size: 1.2rem;
+  }
+}

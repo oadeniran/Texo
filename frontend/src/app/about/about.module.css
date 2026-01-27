@@ -1,0 +1,65 @@
+.container {
+  max-width: 700px;
+  margin: 0 auto;
+  padding: 0 1rem;
+  padding-top: 4rem; 
+}
+
+.card {
+  padding: 2.5rem;
+  margin-bottom: 2rem;
+}
+
+.title {
+  margin-top: 0;
+  margin-bottom: 1rem;
+  font-size: 2rem;
+  color: var(--ink);
+}
+
+.description {
+  font-size: 1.15rem;
+  line-height: 1.7;
+  color: #555;
+  margin-bottom: 2rem;
+}
+
+.divider {
+  border: none;
+  border-top: 1px solid #eee;
+  margin: 2rem 0;
+}
+
+.sectionTitle {
+  color: var(--primary);
+  margin-bottom: 1rem;
+  font-size: 1.3rem;
+}
+
+.stepsList {
+  line-height: 1.8;
+  padding-left: 1.5rem;
+  margin-bottom: 2rem;
+  color: #444;
+}
+
+.stepsList li {
+  margin-bottom: 0.5rem;
+}
+
+.tagContainer {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-top: 1rem;
+}
+
+.tag {
+  background: #f0f0f0;
+  padding: 6px 14px;
+  border-radius: 20px;
+  font-size: 0.9rem;
+  color: #666;
+  font-weight: 500;
+  border: 1px solid #e0e0e0;
+}

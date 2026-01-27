@@ -1,0 +1,125 @@
+:root {
+  --paper: #ffffff; /* Cleaner white for contrast */
+  --ink: #2b2b2b;
+  --primary: #ff6b6b;
+  --secondary: #4ecdc4;
+  --accent: #ffe66d;
+  --font-main: system-ui, -apple-system, sans-serif;
+  --radius: 16px; /* Rounder corners */
+  --shadow: 0 10px 30px rgba(0,0,0,0.08); /* Softer, deeper shadow */
+  --glow: 0 0 20px rgba(255, 107, 107, 0.15); /* Magical glow */
+  --container-padding: 1.5rem;
+}
+
+body {
+  background: linear-gradient(-45deg, #fdfbf7, #f4f1ea, #e8f4f8, #fdfbf7);
+  background-size: 400% 400%;
+  animation: gradientBG 15s ease infinite;
+  
+  color: var(--ink);
+  font-family: var(--font-main);
+  margin: 0;
+  padding: 0;
+  min-height: 100vh;
+
+  overflow-x: hidden;
+}
+
+@keyframes gradientBG {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+/* Utilities */
+.container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 0 1.5rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.btn {
+  border: none;
+  padding: 14px 28px;
+  border-radius: 50px; /* Pill shape */
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  font-size: 1rem;
+  letter-spacing: 0.5px;
+  min-height: 48px;
+}
+
+.btnPrimary {
+  background: linear-gradient(135deg, var(--primary), #ff8e8e);
+  color: white;
+  box-shadow: 0 4px 15px rgba(255, 107, 107, 0.4);
+}
+.btnPrimary:hover {
+  transform: translateY(-3px) scale(1.02);
+  box-shadow: 0 8px 25px rgba(255, 107, 107, 0.5);
+}
+
+.btnSecondary {
+  background: white;
+  border: 2px solid #eee;
+  color: #666;
+}
+.btnSecondary:hover {
+  border-color: var(--secondary);
+  color: var(--secondary);
+  background: #fcfcfc;
+}
+
+input, select, textarea {
+  font-size: 16px !important; 
+}
+
+.card {
+  background: rgba(255, 255, 255, 0.8); /* Glass-like opacity */
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  overflow: hidden;
+  transition: transform 0.3s ease;
+}
+
+/* Magical Text Effect */
+.shimmerText {
+  background: linear-gradient(90deg, var(--primary), var(--secondary), var(--primary));
+  background-size: 200% auto;
+  color: transparent;
+  -webkit-background-clip: text;
+  background-clip: text;
+  animation: shine 3s linear infinite;
+  font-weight: 800;
+}
+
+@keyframes shine {
+  to { background-position: 200% center; }
+}
+
+.spin {
+  animation: spin 1s linear infinite;
+  display: inline-block; 
+  transform-origin: center;
+}
+
+@keyframes spin { 
+  100% { transform: rotate(360deg); } 
+}
+
+@media (max-width: 600px) {
+  :root {
+    --container-padding: 1rem;
+    --radius: 12px;
+  }
+}
