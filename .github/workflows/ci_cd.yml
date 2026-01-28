@@ -51,7 +51,6 @@ jobs:
           tags: ghcr.io/${{ steps.lowercase.outputs.repo_owner_lower }}/texo-fe:v1-${{ github.sha }}
           
   Deploy-job:
-    if: false
     needs: 
       - Containerize-job
     runs-on: ubuntu-latest
@@ -74,5 +73,5 @@ jobs:
         if: contains(github.event.head_commit.message, 'backend-deploy') == false
         uses: azure/webapps-deploy@v2
         with:
-          app-name: 'texo'
+          app-name: 'texo-fe'
           images: 'ghcr.io/${{ needs.Containerize-job.outputs.repo_owner_lower }}/texo-fe:v1-${{ github.sha }}'
