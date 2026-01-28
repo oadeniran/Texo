@@ -1,9 +1,7 @@
 const getEnv = (key: string, fallback?: string): string => {
-  // 1. Runtime Injection (Docker/Azure/K8s)
-  if (typeof window !== "undefined" && (window as any).__ENV?.[key]) {
-    return (window as any).__ENV[key];
+  if (typeof window !== "undefined" && (window as any).env?.[key]) {
+    return (window as any).env[key];
   }
-  // 2. Build-time / Dev fallback
   return fallback || "";
 };
 
