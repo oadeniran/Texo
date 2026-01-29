@@ -24,10 +24,10 @@ class StoryInput(BaseModel):
 class Page(BaseModel):
     page_number: int
     text_content: str
-    image_url: Optional[str] = None # Populated later
-    image_prompt: str # We keep this for debugging/presentation
+    image_url: Optional[str] = None 
+    image_prompt: str 
     duration: Optional[float] = 5
-    audio_url: Optional[str] = None # For future TTS integration
+    audio_url: Optional[str] = None 
 
 
 class StoryStatus(str, Enum):

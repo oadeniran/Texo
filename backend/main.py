@@ -14,7 +14,7 @@ app = FastAPI(title="Gemini Storyteller Agent",
               version="1.0.0",
               docs_url="/api/docs",)
 
-# Enable CORS for Next.js
+
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["*"],
@@ -60,9 +60,6 @@ async def create_story_audio(
         file_bytes=audio_bytes,
         content_type=file.content_type
     )
-
-    # DEBUG: Print size to confirm we actually got data
-    print(f"🎤 Received Audio File: {len(audio_bytes)} bytes") 
     
     if len(audio_bytes) == 0:
         raise HTTPException(status_code=400, detail="Audio file is empty")

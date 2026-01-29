@@ -95,15 +95,15 @@
 
 @media (max-width: 360px) {
   .navContainer {
-    padding: 0 0.2rem; /* Almost no edge padding */
+    padding: 0 0.2rem; 
   }
 
   .logo {
-    font-size: 1.1rem; /* Smaller Logo */
+    font-size: 1.1rem; 
   }
 
   .navLink {
-    font-size: 0.7rem; /* Tiny Text */
+    font-size: 0.7rem; 
   }
   
   /* Make icons smaller on tiny screens */

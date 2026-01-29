@@ -17,14 +17,10 @@ class VertexAIClient:
 
     def chat_completion(self, messages: list[dict], model: str = "gemini-3-flash-preview", **kwargs) -> str:
         try:
-            # Google Gen AI SDK v1 expects a list of Content objects for chat
-            # or a simple list of parts for a single generation.
-            
-            # We will construct a list of `types.Content` to be safe/robust
             formatted_contents = []
 
             for msg in messages:
-                role = msg["role"] # "user" or "model"
+                role = msg["role"]
                 raw_content = msg["content"]
                 parts = []
 
