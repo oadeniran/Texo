@@ -209,19 +209,19 @@ export default function StoryViewer({ params }: { params: Promise<{ id: string }
       <div className={`container ${styles.viewerContainer}`}>
         
         <div className={styles.header}>
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '5px', alignItems: 'flex-start' }}>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '5px', width: '100%' }}>
             
             {/* Title Row */}
-            <div style={{ display: 'flex', alignItems: 'center', gap: '15px' }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
               <button onClick={() => router.push('/')} className="btn btnSecondary" style={{ padding: '8px 12px' }}>
                 <Home size={16} />
               </button>
-              <h2 style={{ margin: 0, fontSize: '1.5rem' }}>{story.title || "Untitled Story"}</h2>
+              <h2 style={{ margin: 0 }}>{story.title || "Untitled Story"}</h2>
             </div>
 
             {/* Metadata Badges Row */}
             {story.creation_metadata && (
-              <div className={styles.metaContainer} style={{ marginLeft: '50px' }}> {/* Indent to align with title */}
+              <div className={styles.metaContainer}>
                 
                 {/* Theme Badge */}
                 <span className={`${styles.metaBadge} ${styles.badgeTheme}`}>

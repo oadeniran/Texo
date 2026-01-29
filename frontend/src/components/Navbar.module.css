@@ -13,8 +13,8 @@
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  align-items: center; /* Critical for vertical alignment */
-  flex-wrap: nowrap;   /* Prevents stacking on small screens */
+  align-items: center; 
+  flex-wrap: nowrap;   
   width: 100%;
 }
 
@@ -22,25 +22,25 @@
   text-decoration: none;
   color: var(--ink);
   display: flex;
-  align-items: center; /* Vertically centers Book Icon with Text */
-  gap: 10px;           /* Space between Book Icon and Text */
+  align-items: center; 
+  gap: 10px;           
   font-weight: 800;
   font-size: 1.4rem;
   letter-spacing: -0.5px;
-  white-space: nowrap; /* Prevents "Magic Storyteller" from breaking lines */
+  white-space: nowrap; 
 }
 
 .menu {
   display: flex;
   flex-direction: row;
-  align-items: center; /* Vertically centers the Links */
-  gap: 2rem;           /* Space between Create / History / About */
+  align-items: center; 
+  gap: 2rem;           
 }
 
 .navLink {
   display: flex;
-  align-items: center; /* Vertically centers Icon with Link Text */
-  gap: 8px;            /* Space between Icon and Text */
+  align-items: center; 
+  gap: 8px;            
   text-decoration: none;
   color: #666;
   font-weight: 600;
@@ -57,32 +57,58 @@
 
 .active {
   color: var(--primary);
-  background: rgba(255, 107, 107, 0.08); /* Subtle highlight for active tab */
+  background: rgba(255, 107, 107, 0.08); 
 }
 
 /* Mobile Responsiveness: Keep alignment but scale down if needed */
 @media (max-width: 600px) {
+  .nav {
+    padding: 0.5rem 0;
+  }
+
   .navContainer {
-    flex-direction: column; /* Stack Logo on top of Menu */
+    flex-direction: column; 
     gap: 1rem;
+    padding: 0 0.5rem
   }
 
   .menu {
-    gap: 0.5rem; /* Tighter spacing */
+    gap: 0; 
     width: 100%;
-    justify-content: space-between; /* Spread links evenly */
+    justify-content: space-evenly; 
   }
 
   .navLink {
     padding: 6px 10px;
     font-size: 0.85rem;
-    flex-direction: column; /* Stack Icon on top of Text */
+    flex-direction: column; 
     gap: 4px;
-    flex: 1; /* Make touch targets equal width */
+    flex: 1; 
     justify-content: center;
   }
   
   .logo {
     font-size: 1.2rem;
+    margin-bottom: 0.2rem;
+  }
+}
+
+@media (max-width: 360px) {
+  .navContainer {
+    padding: 0 0.2rem; /* Almost no edge padding */
+  }
+
+  .logo {
+    font-size: 1.1rem; /* Smaller Logo */
+  }
+
+  .navLink {
+    font-size: 0.7rem; /* Tiny Text */
+  }
+  
+  /* Make icons smaller on tiny screens */
+  .navLink svg {
+    width: 18px;
+    height: 18px;
   }
 }
