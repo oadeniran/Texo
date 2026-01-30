@@ -57,17 +57,17 @@ class VertexAIClient:
             # Return a fallback JSON to prevent the Orchestrator from crashing entirely
             return {"error": "LLM generation failed."}
     
-    def _rewrite_prompt_for_safety(self, unsafe_prompt: str) -> str:
+    def _rewrite_prompt_for_safety(self, unsafe_prompt: str,previous_failures: list[str] = []) -> str:
         """
         Uses the LLM to intelligently rewrite a prompt that triggered safety filters.
         """
-        system_instruction = get_image_generation_prompt_rewrite_system_prompt()
+        system_instruction = get_image_generation_prompt_rewrite_system_prompt(previous_failures)
         
         try:
             response = self.chat_completion(
                 messages=[
                     {"role": "user", "content": system_instruction},
-                    {"role": "user", "content": unsafe_prompt}
+                    {"role": "user", "content": "Original Prompt: " + unsafe_prompt}
                 ],
                 temperature=0.3 # Low temp for strict adherence
             )

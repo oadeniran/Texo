@@ -201,7 +201,12 @@ export default function StoryViewer({ params }: { params: Promise<{ id: string }
   }
 
   // VIEWER STATE
-  const currentPage: Page = story.pages[currentPageIndex];
+  const maxIndex = Math.max(0, story.pages.length - 1);
+  const safeIndex = Math.min(currentPageIndex, maxIndex);
+  if (currentPageIndex > maxIndex) {
+      setCurrentPageIndex(maxIndex);
+  }
+  const currentPage: Page = story.pages[safeIndex];
 
   return (
     <>
@@ -255,7 +260,7 @@ export default function StoryViewer({ params }: { params: Promise<{ id: string }
         <div className={styles.bookFrame}>
           <AnimatePresence mode="wait">
             <motion.div
-              key={currentPageIndex} 
+              key={safeIndex} 
               variants={transitions[currentAnim]} 
               initial="initial"
               animate="animate"
@@ -296,7 +301,7 @@ export default function StoryViewer({ params }: { params: Promise<{ id: string }
         <div className={styles.controls}>
           <button 
             onClick={() => { setIsPlaying(false); changePage('prev'); }} 
-            disabled={currentPageIndex === 0}
+            disabled={safeIndex === 0}
             className="btn btnSecondary"
           >
             <ArrowLeft size={20} /> Prev
@@ -304,7 +309,7 @@ export default function StoryViewer({ params }: { params: Promise<{ id: string }
 
           <div style={{ display: 'flex', gap: '1rem', alignItems: 'center' }}>
             <span style={{ fontWeight: 600, color: '#888' }}>
-              Page {currentPageIndex + 1} of {story.pages.length}
+              Page {safeIndex + 1} of {story.pages.length}
             </span>
             
             <button 
@@ -318,7 +323,7 @@ export default function StoryViewer({ params }: { params: Promise<{ id: string }
 
           <button 
             onClick={() => { setIsPlaying(false); changePage('next'); }} 
-            disabled={currentPageIndex === story.pages.length - 1}
+            disabled={safeIndex === story.pages.length - 1}
             className="btn btnSecondary"
           >
             Next <ArrowRight size={20} />

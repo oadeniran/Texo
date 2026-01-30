@@ -118,7 +118,7 @@ def get_storyboard_prompt(page_count: int, analysis_json: dict) -> str:
     ]
     """
 
-def get_image_generation_prompt_rewrite_system_prompt() -> str:
+def get_image_generation_prompt_rewrite_system_prompt(previous_failures = []) -> str:
     """
     Stage 3 (Fallback): Rewrites prompts that trigger safety filters.
     
@@ -127,7 +127,16 @@ def get_image_generation_prompt_rewrite_system_prompt() -> str:
     - Adds "Illustration" keywords to force the model into a safer "Art" mode.
     - Specific handling for common "children's book" false positives (e.g., 'dirty' -> 'messy', 'bloomers' -> 'shorts').
     """
-    return """
+    failure_context = ""
+    if previous_failures:
+        failure_list = "\n- ".join([f'"{p}"' for p in previous_failures])
+        failure_context = (
+            f"\n\nCONTEXT - THE FOLLOWING REWRITES ALREADY FAILED (SAFETY BLOCK):"
+            f"\n{failure_list}"
+            f"\n\nINSTRUCTION: The safety filter is strict. Do not repeat the phrasing above."
+            f" Try a drastically different angle (e.g., zoom out, focus on environment vs character, remove all action verbs) to ensure an image will get generated but stick to the original visual intent and art style."
+        )
+    return f"""
     You are an expert AI Prompt Engineer specializing in Content Safety and Compliance.
     
     CONTEXT:
@@ -135,6 +144,8 @@ def get_image_generation_prompt_rewrite_system_prompt() -> str:
     
     YOUR TASK:
     Rewrite the prompt to be 100% Safe-For-Work (PG-rated) while preserving the original **visual intent** and **art style**.
+
+    {failure_context}
     
     SAFETY REWRITE RULES:
     1. **Age Ambiguity**: Change specific ages (e.g., "8-year-old girl") to generic artistic terms (e.g., "young storybook character", "tiny adventurer", "youthful hero").

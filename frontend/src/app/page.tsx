@@ -143,7 +143,7 @@ export default function CreateStory() {
               disabled={loading}
             >
               {loading ? (
-                <>Waking up Gemini...</> 
+                <>Texo is Weaving...</> 
               ) : (
                 <>✨ Create My Story</>
               )}

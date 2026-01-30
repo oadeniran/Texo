@@ -12,6 +12,7 @@ GOOGLE_APP_CREDENTIALS = os.getenv("GOOGLE_APPLICATION_CREDENTIALS", "creds.json
 ENVIRONMENT= os.getenv("ENVIRONMENT", "development")
 AZ_BLOB_CONNECTION_STRING = os.getenv("AZURE_STORAGE_CONNECTION_STRING")
 AZ_BLOB_CONTAINER_NAME = os.getenv("AZURE_STORAGE_CONTAINER_NAME", "storytellingprojbucket")
+ELEVENLABS_API_KEY = os.getenv("ELEVENLABS_API_KEY")
 
 # Download Google vertex Json
 response = requests.get(JSON_URL)

@@ -19,54 +19,72 @@ def process_single_page_task(page_data, metadata={}) -> dict:
     """
     maturity = metadata.get("maturity", "toddler")
     story_id = metadata.get("story_id", "unknown")
+    max_retries = 4
+    attempt = 0
+    current_prompt = page_data['image_prompt_description']
+    failed_prompts = [] # Keep track of what didn't work
+    
+    final_image_url = None
+
     try:
-        final_image_prompt = page_data['image_prompt_description']
-        
-        # A. Generate (The slow part)
-        generated_result = vertex_client.generate_image(prompt=final_image_prompt)
+        while attempt < max_retries:
+            print(f"🎨 Page {page_data['page_number']} - Attempt {attempt + 1}/{max_retries}")
+            
+            # A. Try to Generate
+            generated_result = vertex_client.generate_image(prompt=current_prompt, retries=1)
 
-        if generated_result is None:
-            print(f"⚠️ Page {page_data['page_number']} blocked. Rewriting...")
-            update_status(
-                story_id, 
-                "illustrating", 
-                -1, # Keep previous progress bar value (passing -1 or handling in update_status to ignore)
-                f"⚠️ Safety filter hit on Page {page_data['page_number']}. Tweaking prompt..."
-            )
-            
-            # 2. REASON & FIX
-            safe_prompt = vertex_client._rewrite_prompt_for_safety(final_image_prompt)
-            
-            # 3. RETRY
-            generated_result = vertex_client.generate_image(prompt=safe_prompt)
-            
             if generated_result:
-                # Success after fix!
-                update_status(
-                    story_id, 
-                    "illustrating", 
-                    -1, 
-                    f"✅ Prompt fixed for Page {page_data['page_number']}. Generating..."
+                # --- SUCCESS PATH ---
+                print(f"✅ Success on Page {page_data['page_number']}")
+                image_bytes = generated_result.image_bytes
+                
+                # Upload
+                final_image_url = upload_file_bytes(
+                    file_name=None,
+                    file_bytes=image_bytes,
+                    content_type="image/png"
                 )
+                
+                # If we succeeded after a rewrite, update status to let user know we fixed it
+                if attempt > 0:
+                     update_status(
+                        story_id, "illustrating", -1, 
+                        f"✅ Fixed Page {page_data['page_number']} after {attempt} retries."
+                    )
+                break # Exit Loop
+
             else:
-                print(f"❌ Page {page_data['page_number']} failed even after rewrite.")
+                # --- FAILURE PATH (Blocked) ---
+                print(f"⚠️ Page {page_data['page_number']} blocked on Attempt {attempt + 1}")
+                failed_prompts.append(current_prompt)
+                attempt += 1
+                
+                if attempt < max_retries:
+                    # Notify User
+                    update_status(
+                        story_id, "illustrating", -1,
+                        f"⚠️ Safety block (Page {page_data['page_number']}). AI is rewriting prompt (Try {attempt}/{max_retries})..."
+                    )
+                    
+                    # REWRITE WITH CONTEXT
+                    # Pass the list of failed prompts so the AI avoids them
+                    current_prompt = vertex_client._rewrite_prompt_for_safety(
+                        page_data['image_prompt_description'], 
+                        previous_failures=failed_prompts
+                    )
+                else:
+                    print(f"❌ Page {page_data['page_number']} failed after max retries.")
 
-        
-        # B. Prepare for Upload
-        image_bytes = generated_result.image_bytes
+        # B. Fallback if Loop ends without success
+        if not final_image_url:
+            print(f"⚠️ Using fallback image for Page {page_data['page_number']}")
+            final_image_url = "https://placehold.co/1024x1024/EEE/31343C.png?text=Illustration+Unavailable&font=lora"
 
-        # C. Upload to Azure Blob
-        image_url = upload_file_bytes(
-            file_name="",
-            file_bytes=image_bytes,
-            content_type="image/png"
-        )
-        
         return {
             "page_number": page_data['page_number'],
             "text_content": page_data['text_content'],
-            "image_url": image_url,
-            "image_prompt": final_image_prompt,
+            "image_url": final_image_url,
+            "image_prompt": current_prompt,
             "duration": estimate_reading_time(page_data['text_content'], maturity),
             "audio_url": None,
             "success": True
@@ -78,7 +96,7 @@ def process_single_page_task(page_data, metadata={}) -> dict:
             "page_number": page_data['page_number'],
             "text_content": page_data['text_content'],
             "image_url": "https://via.placeholder.com/512?text=Error", # Fallback
-            "image_prompt": final_image_prompt,
+            "image_prompt": current_prompt,
             "success": False
         }
 
