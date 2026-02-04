@@ -1,4 +1,3 @@
-# backend/llm_client.py
 import os
 import logging
 from google import genai
